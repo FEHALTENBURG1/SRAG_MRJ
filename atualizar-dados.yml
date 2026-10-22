@@ -1,0 +1,83 @@
+name: Atualizar dados SRAG MRJ
+
+on:
+  schedule:
+    # cron em UTC. 09:00 UTC = 06:00 Brasília (UTC-3). Seg (1) e Ter (2).
+    - cron: "0 9 * * 1,2"
+  workflow_dispatch:       # permite rodar manualmente pelo botão "Run workflow"
+    inputs:
+      anos:
+        description: "Anos a conferir, separados por vírgula (vazio = série toda, 2019 em diante)"
+        required: false
+        default: ""
+      forcar:
+        description: "Rebaixar e refazer todos os anos, mesmo sem revisão nova"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write          # necessário para commitar os dados gerados
+
+concurrency:               # nunca duas atualizações ao mesmo tempo no mesmo branch
+  group: atualizar-dados-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  preparar-dados:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      LC_ALL: C.UTF-8        # os scripts têm acentos; garante leitura em UTF-8
+      SRAG_ANO_INICIAL: "2019"
+      SRAG_ANOS: ${{ inputs.anos }}
+      SRAG_FORCAR: ${{ inputs.forcar }}
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true   # instala pacotes como binários (rápido)
+
+      - name: Instalar pacotes R
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::dplyr
+            any::tidyr
+            any::stringr
+            any::lubridate
+            any::readr
+            any::jsonlite
+            any::duckdb
+            any::DBI
+            any::curl
+            any::httr
+
+      - name: Rodar pipeline (download + filtro + preparo)
+        run: |
+          # 01 confere a última atualização de cada ano no OpenDATASUS e baixa
+          # só o que mudou; 02 grava o recorte do município do Rio por
+          # ano em historico/bruto/.
+          Rscript run_pipeline.R
+          # 03 aplica as derivações só nos anos alterados ->
+          # historico/pronto/*.parquet e historico/serie_semanal.csv.
+          Rscript R/03_prepara.R
+
+      - name: Commitar dados atualizados
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # funciona com os dados em data/ ou direto na raiz do repositório
+          for p in data/historico historico; do
+            if [ -e "$p" ]; then git add "$p"; fi
+          done
+          if git diff --staged --quiet; then
+            echo "Sem mudanças nos dados. Nada a commitar."
+          else
+            git commit -m "Atualização automática dos dados SRAG MRJ ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            # Puxa mudanças remotas antes do push (evita 'fetch first' / rejected).
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push
+          fi
