@@ -1,8 +1,8 @@
 # SRAG, município do Rio de Janeiro
 
 Série histórica (**2019 em diante**) da base de **SRAG (OpenDATASUS)** recortada para o
-**município do Rio de Janeiro** (código IBGE 330455). Este branch (`mrj`) usa o mesmo
-pipeline do branch `main`, que cobre a RIDE-DF, com o recorte territorial trocado.
+**município do Rio de Janeiro** (código IBGE 330455). Este diretório (`mrj`) usa o mesmo
+pipeline que cobre a RIDE-DF, com o recorte territorial trocado.
 
 O bruto nacional é baixado, filtrado e só os recortes enxutos são versionados, em
 **parquet**, um arquivo por ano.
