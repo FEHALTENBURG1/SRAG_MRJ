@@ -171,14 +171,17 @@ base <- base %>%
     # porque o SEM_PRI do Sivep diverge do calendário na virada 2025/2026:
     # marca 28/12/2025-03/01/2026 como SE 01 (o oficial é SE 53/2025) e deixa
     # 2026 inteiro uma semana adiantado (04-10/01/2026 sai SE 02; o oficial é
-    # SE 01). SEM_PRI/SEM_NOT ficam só como reserva para registros sem data.
-    # (O isoyear() usado antes começa a semana na segunda e rotulava o domingo
-    # da virada no ano errado, ex.: 29/12/2024 saía "2024-SE01".)
-    semana_epidemiologica = coalesce(as.integer(epiweek(data_inicio_sintomas)),
+    # SE 01). (O isoyear() usado antes começa a semana na segunda e rotulava o
+    # domingo da virada no ano errado, ex.: 29/12/2024 saía "2024-SE01".)
+    # Semana e ano saem SEMPRE da mesma data de referência (sintomas e, na falta
+    # dela, notificação), para os dois campos nunca usarem calendários diferentes.
+    # SEM_PRI/SEM_NOT só entram quando o registro não tem nenhuma das duas datas;
+    # nesse caso o ano fica vazio e o registro não entra na série semanal.
+    data_ref_se = coalesce(data_inicio_sintomas, data_notificacao),
+    semana_epidemiologica = coalesce(as.integer(epiweek(data_ref_se)),
                                      as.integer(converter_numero(SEM_PRI)),
                                      as.integer(converter_numero(SEM_NOT))),
-    ano_epidemiologico = as.integer(coalesce(epiyear(data_inicio_sintomas),
-                                             epiyear(data_notificacao))),
+    ano_epidemiologico = as.integer(epiyear(data_ref_se)),
     periodo_se = if_else(!is.na(ano_epidemiologico) & !is.na(semana_epidemiologica),
                          sprintf("%d-SE%02d", ano_epidemiologico, semana_epidemiologica),
                          NA_character_),
@@ -200,6 +203,9 @@ base <- base %>%
     municipio_residencia = coalesce(nome_oficial(CO_MUN_RES), titulo_municipio(ID_MN_RESI), "Município ignorado"),
     unidade_internacao = coalesce(normalizar_texto(str_to_title(NM_UN_INTE)), "Ignorada"),
     tipo_unidade = classificar_unidade(NM_UN_INTE),
+    # ATENÇÃO: é uma INFERÊNCIA pelo nome da unidade (UPA, CER, pronto-atendimento),
+    # não um campo da ficha. A base não informa se houve internação sem leito;
+    # leia como "notificado em unidade de pronto-atendimento".
     internacao_sem_leito = tipo_unidade == "UPA / Pronto-atendimento",
     sexo = case_when(CS_SEXO %in% c("M","1") ~ "Masculino",
                      CS_SEXO %in% c("F","2") ~ "Feminino", TRUE ~ "Ignorado"),
@@ -230,8 +236,14 @@ base <- base %>%
       converter_numero(EVOLUCAO) == 2 ~ "Óbito",
       converter_numero(EVOLUCAO) == 3 ~ "Óbito por outras causas",
       TRUE ~ "Ignorado/em acompanhamento"),
-    caso_encerrado = converter_numero(EVOLUCAO) %in% c(1, 2),
-    obito_srag = converter_numero(EVOLUCAO) == 2,
+    # Evolução 1 = cura, 2 = óbito (SRAG), 3 = óbito por outras causas, 9 ou vazio =
+    # ignorado/em acompanhamento. Encerrado = qualquer desfecho conhecido (1, 2 ou 3).
+    # obito_srag fica NA quando o desfecho é desconhecido (9 ou vazio), em vez de
+    # FALSE, para que "ignorado" nunca seja contado como "não óbito".
+    caso_encerrado = converter_numero(EVOLUCAO) %in% c(1, 2, 3),
+    obito_srag = case_when(converter_numero(EVOLUCAO) == 2 ~ TRUE,
+                           converter_numero(EVOLUCAO) %in% c(1, 3) ~ FALSE,
+                           TRUE ~ NA),
     classificacao_final = case_when(
       converter_numero(CLASSI_FIN) == 1 ~ "SRAG por influenza",
       converter_numero(CLASSI_FIN) == 2 ~ "SRAG por outro vírus respiratório",
@@ -317,6 +329,11 @@ pronto <- base %>%
 
 cat("  linhas:", nrow(pronto), "| colunas:", ncol(pronto),
     "| com vírus identificado:", sum(pronto$numero_virus > 0), "\n")
+# Registros sem ano ou semana epidemiológica não entram na série semanal.
+n_sem_se <- sum(is.na(pronto$ano_epidemiologico) | is.na(pronto$semana_epidemiologica))
+if (n_sem_se > 0)
+  warning(sprintf("%s: %d registro(s) sem ano/semana epidemiológica (ficam fora da série semanal).",
+                  basename(ENTRADA), n_sem_se), call. = FALSE)
 pronto
 }
 
@@ -389,6 +406,13 @@ if (any(refazer) || !file.exists(arquivo_serie)) {
   readr::write_excel_csv(serie_semanal, arquivo_serie, na = "")
   cat("Gravado:", arquivo_serie, "| linhas:", nrow(serie_semanal),
       "| casos:", sum(serie_semanal$casos), "\n")
+  # Conferência: a série semanal deve conter todos os registros das bases prontas.
+  total_pronto <- as.numeric(dbGetQuery(con, sprintf(
+    "SELECT count(*) AS n FROM read_parquet(%s, union_by_name = true)", arquivos_sql))$n)
+  if (sum(serie_semanal$casos) != total_pronto)
+    warning(sprintf("Série semanal com %d casos, bases prontas com %d: %d registro(s) sem ano/semana ficaram de fora.",
+                    sum(serie_semanal$casos), total_pronto, total_pronto - sum(serie_semanal$casos)),
+            call. = FALSE)
 }
 
 dbDisconnect(con, shutdown = TRUE)

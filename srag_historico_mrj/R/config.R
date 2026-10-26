@@ -24,6 +24,8 @@ prefixo_arquivo <- "srag_mrj"
 #   SRAG_ANO_INICIAL  primeiro ano da série (padrão 2019)
 #   SRAG_ANOS         lista explícita, ex.: "2025,2026" (sobrepõe o intervalo)
 #   SRAG_URLS         URLs fixas separadas por vírgula (sobrepõe a descoberta)
+#   SRAG_URL_DATASET  página do dataset no OpenDATASUS (padrão: srag-2019-a-<ano atual>,
+#                     com o ano anterior como reserva)
 #   SRAG_JANELA_DIAS  quantos dias para trás sondar no S3 se o site falhar (35)
 #   SRAG_FORCAR       "1"/"true" para rebaixar e refiltrar todos os anos
 # ---------------------------------------------------------------------------
@@ -43,16 +45,27 @@ forcar_tudo <- tolower(Sys.getenv("SRAG_FORCAR", "")) %in% c("1", "true", "sim",
 janela_dias <- as.integer(Sys.getenv("SRAG_JANELA_DIAS", "35"))
 
 # Página do conjunto de dados: é ela que diz qual é a última atualização.
-url_dataset <- "https://dadosabertos.saude.gov.br/dataset/srag-2019-a-2026"
+# O nome da página traz o último ano da série (srag-2019-a-AAAA) e muda quando o
+# Ministério abre o ano novo. Por isso o pipeline tenta, nesta ordem: a variável
+# SRAG_URL_DATASET (se definida), o ano corrente e o ano anterior. A primeira
+# página que listar arquivos .parquet vale.
+urls_dataset <- local({
+  base <- "https://dadosabertos.saude.gov.br/dataset/srag-2019-a-%d"
+  env  <- trimws(Sys.getenv("SRAG_URL_DATASET", ""))
+  unique(c(if (nzchar(env)) env, sprintf(base, c(ano_atual, ano_atual - 1L))))
+})
+url_dataset <- urls_dataset[1]   # primeira candidata (mantido por compatibilidade)
 s3_base     <- "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/SRAG"
 
-# Última revisão conhecida de cada ano (conferida no site em 05/10/2026).
+# Última revisão conhecida de cada ano (espelha o manifesto de 21/10/2026).
 # Só é usada como último recurso, quando o site e a sondagem falham e o ano
 # ainda não está no manifesto -- tipicamente na primeira carga da série.
+# Atualize quando o manifesto avançar; o efeito de deixá-la velha é só baixar
+# uma revisão antiga na primeira carga, que a execução seguinte corrige.
 revisoes_conhecidas <- c(
   "2019" = "23-03-2026", "2020" = "23-03-2026", "2021" = "23-03-2026",
   "2022" = "23-03-2026", "2023" = "23-03-2026", "2024" = "23-03-2026",
-  "2025" = "28-09-2026", "2026" = "28-09-2026"
+  "2025" = "19-10-2026", "2026" = "19-10-2026"
 )
 
 `%||%` <- function(a, b) if (is.null(a) || length(a) == 0 || identical(a, "")) b else a
@@ -106,7 +119,7 @@ revisoes_conhecidas <- c(
   for (i in seq_len(tentativas)) {
     r <- tryCatch({
       h <- curl::new_handle(followlocation = TRUE, connecttimeout = 30, timeout = 90,
-                            useragent = "Mozilla/5.0 (pipeline srag_historico, branch mrj; R curl)")
+                            useragent = "Mozilla/5.0 (pipeline srag_historico_mrj; R curl)")
       resp <- curl::curl_fetch_memory(u, handle = h)
       if (resp$status_code != 200L) stop("HTTP ", resp$status_code)
       txt <- rawToChar(resp$content); Encoding(txt) <- "UTF-8"; txt
@@ -159,15 +172,24 @@ revisoes_conhecidas <- c(
 }
 
 .recursos_do_site <- function() {
-  tryCatch({
-    tab <- .interpretar_pagina(.baixar_texto(url_dataset))
-    if (nrow(tab) == 0) stop("nenhum recurso .parquet encontrado na página")
-    tab
-  }, error = function(e) {
-    message("  Site do OpenDATASUS indisponível (", conditionMessage(e),
-            "); usando sondagem no S3.")
-    .mais_recente_por_ano(character(0))
-  })
+  motivos <- character(0)
+  for (u in urls_dataset) {
+    # 4 tentativas na primeira candidata; nas demais, 2 (uma página que não
+    # existe mais não deve atrasar a execução).
+    tentativas <- if (identical(u, urls_dataset[1])) 4 else 2
+    tab <- tryCatch({
+      t <- .interpretar_pagina(.baixar_texto(u, tentativas = tentativas))
+      if (nrow(t) == 0) stop("nenhum recurso .parquet encontrado na página")
+      t
+    }, error = function(e) {
+      motivos <<- c(motivos, sprintf("%s: %s", basename(u), conditionMessage(e)))
+      NULL
+    })
+    if (!is.null(tab)) return(tab)
+  }
+  message("  Site do OpenDATASUS indisponível (", paste(motivos, collapse = "; "),
+          "); usando sondagem no S3.")
+  .mais_recente_por_ano(character(0))
 }
 
 # (b) Sondagem no S3: testa as datas de revisão dos últimos `janela_dias`

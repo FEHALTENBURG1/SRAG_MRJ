@@ -1,15 +1,16 @@
 # SRAG, município do Rio de Janeiro
 
 Série histórica (**2019 em diante**) da base de **SRAG (OpenDATASUS)** recortada para o
-**município do Rio de Janeiro** (código IBGE 330455). Este diretório (`mrj`) usa o mesmo
-pipeline que cobre a RIDE-DF, com o recorte territorial trocado.
+**município do Rio de Janeiro** (código IBGE 330455). Os scripts ficam na pasta
+`srag_historico_mrj/` deste repositório e seguem o mesmo pipeline que cobre a RIDE-DF,
+com o recorte territorial trocado.
 
 O bruto nacional é baixado, filtrado e só os recortes enxutos são versionados, em
 **parquet**, um arquivo por ano.
 
-## O que muda em relação ao `main`
+## O que muda em relação ao pipeline da RIDE-DF
 
-| Item | `main` (RIDE-DF) | `mrj` (município do Rio) |
+| Item | RIDE-DF | Município do Rio |
 |---|---|---|
 | Recorte | 34 municípios da RIDE-DF | Rio de Janeiro (330455) |
 | Critério de inclusão | notificação **ou** residência no recorte | igual |
@@ -22,7 +23,7 @@ O bruto nacional é baixado, filtrado e só os recortes enxutos são versionados
 | Coluna do manifesto | `linhas_ride` | `linhas_recorte` |
 | CSV do ano corrente na raiz | `dados_limpos_df.csv`, `srag_ride_pronto.csv` | não existem |
 
-A base pronta do `mrj` tem 46 colunas. Todas existem no `main` com o mesmo nome e significado; o `main` tem 48, porque inclui também `ra_residencia` e `populacao_ra`.
+A base pronta do município do Rio tem 46 colunas. Todas existem na versão da RIDE-DF com o mesmo nome e significado; a da RIDE-DF tem 48, porque inclui também `ra_residencia` e `populacao_ra`.
 
 ## Arquitetura
 
@@ -33,7 +34,7 @@ flowchart LR
     B -->|02_filter_clean.R<br/>DuckDB| C[historico/bruto/<br/>recorte do município por ano .parquet]
     C -->|03_prepara.R<br/>só os anos alterados| P[historico/pronto/<br/>base analítica por ano .parquet<br/>+ serie_semanal.csv]
     P -->|git commit/push| D[(GitHub)]
-    E[GitHub Actions<br/>manual neste branch] -.orquestra.-> S
+    E[GitHub Actions<br/>segunda e terça, ou manual] -.orquestra.-> S
 ```
 
 Princípios:
@@ -49,26 +50,30 @@ Princípios:
 ## Estrutura
 
 ```
-srag_historico/
-├── R/
-│   ├── config.R            # código do município, descoberta das URLs, caminhos
-│   ├── municipios_rj.csv   # códigos e nomes oficiais dos 92 municípios do RJ (IBGE)
-│   ├── 01_download.R       # confere a última atualização e baixa o que mudou
-│   ├── 02_filter_clean.R   # filtra com DuckDB -> recorte por ano
-│   ├── 03_prepara.R        # derivações -> base pronta por ano + série semanal
-│   └── ler_historico.R     # ler_srag_mrj(): carrega a série pronta
-├── run_pipeline.R          # orquestra 01 + 02
-├── historico/
-│   ├── manifesto.csv                         # revisão de cada ano que está no repositório
-│   ├── serie_semanal.csv                     # casos, óbitos e UTI por SE (toda a série)
-│   ├── bruto/srag_mrj_bruto_AAAA.parquet     # colunas originais do Sivep
-│   └── pronto/srag_mrj_pronto_AAAA.parquet   # 46 colunas analíticas
-└── .github/workflows/atualizar-dados.yml
+SRAG_MRJ/                                   # raiz do repositório
+├── .github/workflows/atualizar-dados.yml   # precisa ficar aqui, na raiz, para o GitHub ler
+└── srag_historico_mrj/
+    ├── R/
+    │   ├── config.R            # código do município, descoberta das URLs, caminhos
+    │   ├── municipios_rj.csv   # códigos e nomes oficiais dos 92 municípios do RJ (IBGE)
+    │   ├── 01_download.R       # confere a última atualização e baixa o que mudou
+    │   ├── 02_filter_clean.R   # filtra com DuckDB -> recorte por ano
+    │   ├── 03_prepara.R        # derivações -> base pronta por ano + série semanal
+    │   └── ler_historico.R     # ler_srag_mrj(): carrega a série pronta
+    ├── run_pipeline.R          # orquestra 01 + 02
+    └── historico/
+        ├── manifesto.csv                         # revisão de cada ano que está no repositório
+        ├── serie_semanal.csv                     # casos, óbitos e UTI por SE (toda a série)
+        ├── bruto/srag_mrj_bruto_AAAA.parquet     # colunas originais do Sivep
+        └── pronto/srag_mrj_pronto_AAAA.parquet   # 46 colunas analíticas
 ```
 
 ## Como rodar localmente
 
+Os scripts usam caminhos relativos à pasta `srag_historico_mrj/`; rode-os de dentro dela.
+
 ```bash
+cd srag_historico_mrj
 Rscript -e 'install.packages(c("duckdb","DBI","curl","jsonlite","dplyr","tidyr","stringr","lubridate","readr","httr"))'
 Rscript run_pipeline.R        # baixa e filtra só o que mudou
 Rscript R/03_prepara.R        # gera as bases prontas e a série semanal
@@ -82,12 +87,15 @@ Opções (variáveis de ambiente):
 | `SRAG_ANOS` | conferir só alguns anos, ex.: `2025,2026` | série toda |
 | `SRAG_FORCAR` | `1` para rebaixar e refazer tudo | desligado |
 | `SRAG_URLS` | fixar as URLs à mão (separadas por vírgula) | descoberta automática |
+| `SRAG_URL_DATASET` | página do dataset no OpenDATASUS, se o endereço mudar | `srag-2019-a-<ano atual>` (e, se falhar, `<ano anterior>`) |
 | `SRAG_JANELA_DIAS` | dias para trás na sondagem do S3, se o site falhar | `35` |
 | `SRAG_DIR_SAIDA` | pasta de saída (`.` grava `historico/` na raiz) | automático |
 
-No GitHub, o botão **Run workflow** aceita os mesmos `anos` e `forcar`. O agendamento
-(segunda e terça) só dispara no branch padrão do repositório. Neste branch, rode o
-workflow manualmente, ou mova o agendamento quando o `mrj` virar um repositório próprio.
+No GitHub, o workflow `.github/workflows/atualizar-dados.yml` roda toda segunda e terça
+(06:00 de Brasília) no branch padrão e roda todos os passos dentro de `srag_historico_mrj/`.
+O botão **Run workflow** aceita os mesmos `anos` e `forcar`. O GitHub só lê workflows da
+pasta `.github/workflows/` na **raiz** do repositório; se o arquivo for movido para dentro
+de `srag_historico_mrj/`, o agendamento deixa de disparar.
 
 ## Como usar a série
 
@@ -118,14 +126,14 @@ epidemiológica, território de residência e classificação final.
   identificados em `territorio_residencia`. Para analisar só os residentes, filtre
   `territorio_residencia == "Município do Rio de Janeiro"`.
 - **Semana epidemiológica:** calculada pela data dos primeiros sintomas, conforme o
-  calendário oficial (domingo a sábado). O campo `SEM_PRI` do Sivep não é usado porque
-  diverge do calendário na virada 2025/2026.
+  calendário oficial (domingo a sábado). O campo `SEM_PRI` do Sivep só é usado como
+  último recurso, porque diverge do calendário na virada 2025/2026.
 - **`id_caso`** nos arquivos por ano é `ano × 1.000.000 + sequência`; é único na série,
   mas não é estável entre revisões (não use como chave permanente).
 - **População:** `populacao_residencia` é um valor fixo (IBGE, Estimativas 2024),
   repetido em todos os anos. Para incidência histórica, use denominadores do ano
   correspondente.
-- **Bairro:** a base nacional de SRAG não traz bairro de residência, então este branch não
+- **Bairro:** a base nacional de SRAG não traz bairro de residência, então esta série não
   tem essa dimensão. A menor unidade territorial disponível é o município. Análises por
   bairro ou Área de Planejamento precisam de outra fonte.
 - **Nomes de município:** para os 92 municípios do RJ, vêm da tabela do IBGE em
@@ -135,5 +143,26 @@ epidemiológica, território de residência e classificação final.
   (`NM_UN_INTE`) e é uma heurística. As regras reconhecem os padrões do Rio: CER e UPA
   como pronto-atendimento; Clínica da Família, CMS e Coordenadoria de Atenção Primária
   como APS; hospitais, institutos e unidades da Fiocruz como hospital. Cerca de 2% dos
-  casos ficam em "Outro / não classificado" (centros médicos e operadoras privadas).
-  Confira a classificação antes de usá-la em análises por serviço.
+  casos ficam em "Outro / não classificado" (centros médicos e operadoras privadas) e
+  cerca de 12% em "Ignorada", porque a ficha veio sem nome de unidade. Confira a
+  classificação antes de usá-la em análises por serviço.
+- **`internacao_sem_leito`:** é uma **inferência**, não um campo da ficha. Vale `TRUE`
+  quando `tipo_unidade` é "UPA / Pronto-atendimento", isto é, quando a notificação partiu
+  de uma unidade de pronto-atendimento. A ficha do Sivep não informa se o paciente
+  ficou de fato sem leito; trate a coluna como aproximação.
+- **Desfecho (`evolucao`, `obito_srag`, `caso_encerrado`):**
+  - `caso_encerrado` é `TRUE` para cura (1), óbito por SRAG (2) e óbito por outras
+    causas (3). É `FALSE` para evolução ignorada (9) ou em branco, ou seja, caso ainda
+    em acompanhamento ou sem desfecho informado.
+  - `obito_srag` é `TRUE` para óbito por SRAG (2), `FALSE` para cura (1) e óbito por
+    outras causas (3), e **`NA`** quando o desfecho é desconhecido (9 ou em branco). Para
+    letalidade, use `obito_srag` entre os casos com `!is.na(obito_srag)`; contar os `NA`
+    como "não óbito" subestima a letalidade, principalmente nas semanas mais recentes.
+- **Semanas recentes são incompletas:** a notificação chega com atraso (mediana de cerca
+  de 4 dias) e boa parte dos casos do ano corrente ainda está em acompanhamento, então
+  as últimas semanas da série e a letalidade do ano corrente tendem a ser revistas.
+- **Conferência da série semanal:** ao gravar `serie_semanal.csv`, o `03_prepara.R`
+  compara o total de casos da série com o total das bases prontas e emite um aviso se
+  houver registros sem ano ou semana epidemiológica (eles ficam fora da série). A
+  semana usa a data dos primeiros sintomas e, se ela faltar, a data de notificação, e
+  o ano epidemiológico sai sempre da mesma data de referência.
