@@ -9,8 +9,8 @@
 #
 # Fora do repositório (ex.: no app publicado), leia direto do GitHub:
 #   srag <- ler_srag_mrj(origem = paste0(
-#     "https://raw.githubusercontent.com/FEHALTENBURG1/srag_historico/mrj/",
-#     "historico"))
+#     "https://raw.githubusercontent.com/FEHALTENBURG1/SRAG_MRJ/main/",
+#     "srag_historico_mrj/historico"))
 #
 # Os arquivos são parquet: as datas já vêm como Date, os indicadores como
 # lógico e os números como número, iguais em todos os anos. Quem preferir

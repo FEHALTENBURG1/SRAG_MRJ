@@ -26,6 +26,13 @@ jobs:
   preparar-dados:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    defaults:
+      run:
+        # Os scripts e a pasta historico/ ficam em srag_historico_mrj/. Este
+        # workflow precisa estar em .github/workflows/ na RAIZ do repositório
+        # (o GitHub não lê workflows de subpastas); todos os passos "run"
+        # abaixo rodam dentro dessa subpasta.
+        working-directory: srag_historico_mrj
     env:
       LC_ALL: C.UTF-8        # os scripts têm acentos; garante leitura em UTF-8
       SRAG_ANO_INICIAL: "2019"
@@ -69,7 +76,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # funciona com os dados em data/ ou direto na raiz do repositório
+          # caminhos relativos a srag_historico_mrj/ (working-directory acima);
+          # funciona com os dados em data/ ou direto nessa pasta
           for p in data/historico historico; do
             if [ -e "$p" ]; then git add "$p"; fi
           done
