@@ -3253,7 +3253,7 @@
 2026,14,"2026-SE14","Município do Rio de Janeiro","SRAG por COVID-19",2,1,2,2
 2026,14,"2026-SE14","Município do Rio de Janeiro","SRAG por influenza",28,5,17,27
 2026,14,"2026-SE14","Município do Rio de Janeiro","SRAG por outro agente etiológico",4,1,2,0
-2026,14,"2026-SE14","Município do Rio de Janeiro","SRAG por outro vírus respiratório",70,3,12,70
+2026,14,"2026-SE14","Município do Rio de Janeiro","SRAG por outro vírus respiratório",70,2,12,70
 2026,14,"2026-SE14","Outros municípios do RJ","SRAG não especificada",10,3,3,0
 2026,14,"2026-SE14","Outros municípios do RJ","SRAG por influenza",5,1,2,5
 2026,14,"2026-SE14","Outros municípios do RJ","SRAG por outro vírus respiratório",12,0,3,12
@@ -3284,7 +3284,7 @@
 2026,18,"2026-SE18","Município do Rio de Janeiro","SRAG por COVID-19",4,1,1,4
 2026,18,"2026-SE18","Município do Rio de Janeiro","SRAG por influenza",6,1,4,6
 2026,18,"2026-SE18","Município do Rio de Janeiro","SRAG por outro agente etiológico",2,1,0,0
-2026,18,"2026-SE18","Município do Rio de Janeiro","SRAG por outro vírus respiratório",96,3,24,96
+2026,18,"2026-SE18","Município do Rio de Janeiro","SRAG por outro vírus respiratório",95,2,23,95
 2026,18,"2026-SE18","Outros municípios do RJ","SRAG não especificada",4,1,3,0
 2026,18,"2026-SE18","Outros municípios do RJ","SRAG por COVID-19",1,0,0,1
 2026,18,"2026-SE18","Outros municípios do RJ","SRAG por influenza",1,0,0,1
@@ -3295,8 +3295,7 @@
 2026,19,"2026-SE19","Município do Rio de Janeiro","SRAG por outro vírus respiratório",126,2,38,126
 2026,19,"2026-SE19","Outros municípios do RJ","SRAG não especificada",11,0,5,0
 2026,19,"2026-SE19","Outros municípios do RJ","SRAG por outro vírus respiratório",9,0,4,9
-2026,20,"2026-SE20","Município do Rio de Janeiro","Não classificada",1,0,1,0
-2026,20,"2026-SE20","Município do Rio de Janeiro","SRAG não especificada",48,4,12,0
+2026,20,"2026-SE20","Município do Rio de Janeiro","SRAG não especificada",49,4,13,0
 2026,20,"2026-SE20","Município do Rio de Janeiro","SRAG por COVID-19",1,0,1,1
 2026,20,"2026-SE20","Município do Rio de Janeiro","SRAG por influenza",12,0,6,12
 2026,20,"2026-SE20","Município do Rio de Janeiro","SRAG por outro vírus respiratório",129,2,30,129
@@ -3333,7 +3332,7 @@
 2026,24,"2026-SE24","Município do Rio de Janeiro","SRAG por COVID-19",3,0,1,3
 2026,24,"2026-SE24","Município do Rio de Janeiro","SRAG por influenza",36,2,16,36
 2026,24,"2026-SE24","Município do Rio de Janeiro","SRAG por outro agente etiológico",1,0,1,1
-2026,24,"2026-SE24","Município do Rio de Janeiro","SRAG por outro vírus respiratório",124,2,32,124
+2026,24,"2026-SE24","Município do Rio de Janeiro","SRAG por outro vírus respiratório",125,2,32,125
 2026,24,"2026-SE24","Outras UFs","SRAG por outro vírus respiratório",1,0,1,1
 2026,24,"2026-SE24","Outros municípios do RJ","SRAG não especificada",9,0,2,0
 2026,24,"2026-SE24","Outros municípios do RJ","SRAG por COVID-19",1,0,1,1
@@ -3356,12 +3355,12 @@
 2026,26,"2026-SE26","Outras UFs","SRAG por outro vírus respiratório",1,0,0,1
 2026,26,"2026-SE26","Outros municípios do RJ","SRAG não especificada",8,0,1,0
 2026,26,"2026-SE26","Outros municípios do RJ","SRAG por influenza",6,0,2,6
-2026,26,"2026-SE26","Outros municípios do RJ","SRAG por outro vírus respiratório",18,2,7,18
+2026,26,"2026-SE26","Outros municípios do RJ","SRAG por outro vírus respiratório",17,2,7,17
 2026,27,"2026-SE27","Município do Rio de Janeiro","SRAG não especificada",65,0,7,0
 2026,27,"2026-SE27","Município do Rio de Janeiro","SRAG por COVID-19",1,0,0,1
 2026,27,"2026-SE27","Município do Rio de Janeiro","SRAG por influenza",31,1,9,31
 2026,27,"2026-SE27","Município do Rio de Janeiro","SRAG por outro agente etiológico",2,0,2,1
-2026,27,"2026-SE27","Município do Rio de Janeiro","SRAG por outro vírus respiratório",95,2,25,95
+2026,27,"2026-SE27","Município do Rio de Janeiro","SRAG por outro vírus respiratório",96,2,25,96
 2026,27,"2026-SE27","Outras UFs","SRAG não especificada",1,0,0,0
 2026,27,"2026-SE27","Outros municípios do RJ","SRAG não especificada",3,0,1,0
 2026,27,"2026-SE27","Outros municípios do RJ","SRAG por COVID-19",1,0,1,1
@@ -3372,13 +3371,12 @@
 2026,28,"2026-SE28","Município do Rio de Janeiro","SRAG por COVID-19",1,0,1,1
 2026,28,"2026-SE28","Município do Rio de Janeiro","SRAG por influenza",29,1,12,29
 2026,28,"2026-SE28","Município do Rio de Janeiro","SRAG por outro agente etiológico",2,1,2,1
-2026,28,"2026-SE28","Município do Rio de Janeiro","SRAG por outro vírus respiratório",90,3,25,90
+2026,28,"2026-SE28","Município do Rio de Janeiro","SRAG por outro vírus respiratório",91,3,25,91
 2026,28,"2026-SE28","Outras UFs","SRAG por outro vírus respiratório",1,0,1,1
-2026,28,"2026-SE28","Outros municípios do RJ","SRAG não especificada",7,1,3,0
+2026,28,"2026-SE28","Outros municípios do RJ","SRAG não especificada",8,1,4,0
 2026,28,"2026-SE28","Outros municípios do RJ","SRAG por influenza",7,0,4,7
 2026,28,"2026-SE28","Outros municípios do RJ","SRAG por outro vírus respiratório",6,0,3,6
-2026,29,"2026-SE29","Município do Rio de Janeiro","Não classificada",1,0,0,0
-2026,29,"2026-SE29","Município do Rio de Janeiro","SRAG não especificada",55,5,13,0
+2026,29,"2026-SE29","Município do Rio de Janeiro","SRAG não especificada",56,6,13,0
 2026,29,"2026-SE29","Município do Rio de Janeiro","SRAG por COVID-19",3,0,2,3
 2026,29,"2026-SE29","Município do Rio de Janeiro","SRAG por influenza",22,2,9,22
 2026,29,"2026-SE29","Município do Rio de Janeiro","SRAG por outro vírus respiratório",67,2,23,67
@@ -3386,9 +3384,9 @@
 2026,29,"2026-SE29","Outros municípios do RJ","SRAG por influenza",8,1,5,8
 2026,29,"2026-SE29","Outros municípios do RJ","SRAG por outro vírus respiratório",4,0,3,4
 2026,30,"2026-SE30","Município do Rio de Janeiro","Não classificada",1,0,1,1
-2026,30,"2026-SE30","Município do Rio de Janeiro","SRAG não especificada",48,5,11,0
+2026,30,"2026-SE30","Município do Rio de Janeiro","SRAG não especificada",47,5,11,0
 2026,30,"2026-SE30","Município do Rio de Janeiro","SRAG por influenza",15,2,5,15
-2026,30,"2026-SE30","Município do Rio de Janeiro","SRAG por outro vírus respiratório",54,1,15,54
+2026,30,"2026-SE30","Município do Rio de Janeiro","SRAG por outro vírus respiratório",55,1,16,55
 2026,30,"2026-SE30","Outras UFs","SRAG por influenza",1,0,1,1
 2026,30,"2026-SE30","Outras UFs","SRAG por outro vírus respiratório",1,0,1,1
 2026,30,"2026-SE30","Outros municípios do RJ","SRAG não especificada",7,0,2,0
@@ -3401,9 +3399,8 @@
 2026,31,"2026-SE31","Outros municípios do RJ","SRAG por influenza",3,1,2,3
 2026,31,"2026-SE31","Outros municípios do RJ","SRAG por outro agente etiológico",1,1,0,0
 2026,31,"2026-SE31","Outros municípios do RJ","SRAG por outro vírus respiratório",4,0,2,4
-2026,32,"2026-SE32","Município do Rio de Janeiro","Não classificada",1,0,1,0
 2026,32,"2026-SE32","Município do Rio de Janeiro","SRAG não especificada",59,5,20,0
-2026,32,"2026-SE32","Município do Rio de Janeiro","SRAG por influenza",4,0,4,4
+2026,32,"2026-SE32","Município do Rio de Janeiro","SRAG por influenza",5,1,5,5
 2026,32,"2026-SE32","Município do Rio de Janeiro","SRAG por outro vírus respiratório",50,4,16,50
 2026,32,"2026-SE32","Outras UFs","SRAG por influenza",1,0,0,1
 2026,32,"2026-SE32","Outros municípios do RJ","SRAG não especificada",4,1,1,0
@@ -3414,7 +3411,7 @@
 2026,33,"2026-SE33","Município do Rio de Janeiro","SRAG por influenza",7,1,2,7
 2026,33,"2026-SE33","Município do Rio de Janeiro","SRAG por outro vírus respiratório",56,2,21,56
 2026,33,"2026-SE33","Outras UFs","SRAG por outro vírus respiratório",1,0,0,1
-2026,33,"2026-SE33","Outros municípios do RJ","SRAG não especificada",5,0,2,0
+2026,33,"2026-SE33","Outros municípios do RJ","SRAG não especificada",6,0,3,0
 2026,33,"2026-SE33","Outros municípios do RJ","SRAG por influenza",4,0,2,4
 2026,33,"2026-SE33","Outros municípios do RJ","SRAG por outro vírus respiratório",7,0,2,7
 2026,34,"2026-SE34","Município do Rio de Janeiro","Não classificada",1,0,0,0
@@ -3424,59 +3421,77 @@
 2026,34,"2026-SE34","Outras UFs","SRAG não especificada",1,0,0,0
 2026,34,"2026-SE34","Outros municípios do RJ","SRAG não especificada",7,0,4,0
 2026,34,"2026-SE34","Outros municípios do RJ","SRAG por outro vírus respiratório",5,1,3,5
-2026,35,"2026-SE35","Município do Rio de Janeiro","Não classificada",2,0,1,0
-2026,35,"2026-SE35","Município do Rio de Janeiro","SRAG não especificada",67,6,25,0
+2026,35,"2026-SE35","Município do Rio de Janeiro","Não classificada",1,0,1,0
+2026,35,"2026-SE35","Município do Rio de Janeiro","SRAG não especificada",69,6,25,0
 2026,35,"2026-SE35","Município do Rio de Janeiro","SRAG por COVID-19",1,0,0,1
 2026,35,"2026-SE35","Município do Rio de Janeiro","SRAG por influenza",8,1,3,8
-2026,35,"2026-SE35","Município do Rio de Janeiro","SRAG por outro vírus respiratório",58,1,16,58
+2026,35,"2026-SE35","Município do Rio de Janeiro","SRAG por outro vírus respiratório",61,1,17,61
 2026,35,"2026-SE35","Outras UFs","SRAG por outro vírus respiratório",1,0,1,1
-2026,35,"2026-SE35","Outros municípios do RJ","SRAG não especificada",9,0,2,0
+2026,35,"2026-SE35","Outros municípios do RJ","SRAG não especificada",8,0,2,0
 2026,35,"2026-SE35","Outros municípios do RJ","SRAG por outro vírus respiratório",8,0,4,8
-2026,36,"2026-SE36","Município do Rio de Janeiro","Não classificada",1,0,1,1
-2026,36,"2026-SE36","Município do Rio de Janeiro","SRAG não especificada",46,4,16,0
+2026,36,"2026-SE36","Município do Rio de Janeiro","SRAG não especificada",48,5,16,0
 2026,36,"2026-SE36","Município do Rio de Janeiro","SRAG por influenza",7,1,6,7
-2026,36,"2026-SE36","Município do Rio de Janeiro","SRAG por outro vírus respiratório",40,1,17,40
-2026,36,"2026-SE36","Outros municípios do RJ","SRAG não especificada",8,0,4,0
+2026,36,"2026-SE36","Município do Rio de Janeiro","SRAG por outro vírus respiratório",41,1,18,41
+2026,36,"2026-SE36","Outros municípios do RJ","SRAG não especificada",9,1,5,0
 2026,36,"2026-SE36","Outros municípios do RJ","SRAG por influenza",1,0,1,1
 2026,36,"2026-SE36","Outros municípios do RJ","SRAG por outro vírus respiratório",6,0,3,6
-2026,37,"2026-SE37","Município do Rio de Janeiro","Não classificada",2,0,1,0
-2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG não especificada",64,2,13,0
+2026,37,"2026-SE37","Município do Rio de Janeiro","Não classificada",1,0,1,0
+2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG não especificada",66,2,13,0
 2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG por COVID-19",3,0,1,3
-2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG por influenza",3,1,3,3
+2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG por influenza",3,2,3,3
 2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG por outro agente etiológico",4,1,0,0
-2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG por outro vírus respiratório",44,0,10,44
+2026,37,"2026-SE37","Município do Rio de Janeiro","SRAG por outro vírus respiratório",45,0,11,45
 2026,37,"2026-SE37","Outras UFs","SRAG não especificada",1,0,0,0
-2026,37,"2026-SE37","Outros municípios do RJ","SRAG não especificada",10,1,2,0
+2026,37,"2026-SE37","Outros municípios do RJ","SRAG não especificada",11,2,3,0
 2026,37,"2026-SE37","Outros municípios do RJ","SRAG por outro vírus respiratório",5,0,3,5
-2026,38,"2026-SE38","Município do Rio de Janeiro","Não classificada",14,0,4,1
-2026,38,"2026-SE38","Município do Rio de Janeiro","SRAG não especificada",53,3,18,0
+2026,38,"2026-SE38","Município do Rio de Janeiro","Não classificada",1,0,1,0
+2026,38,"2026-SE38","Município do Rio de Janeiro","SRAG não especificada",64,4,20,0
 2026,38,"2026-SE38","Município do Rio de Janeiro","SRAG por COVID-19",1,0,0,1
 2026,38,"2026-SE38","Município do Rio de Janeiro","SRAG por influenza",4,0,3,4
-2026,38,"2026-SE38","Município do Rio de Janeiro","SRAG por outro vírus respiratório",41,0,11,41
-2026,38,"2026-SE38","Outros municípios do RJ","Não classificada",1,0,1,0
-2026,38,"2026-SE38","Outros municípios do RJ","SRAG não especificada",4,0,1,0
+2026,38,"2026-SE38","Município do Rio de Janeiro","SRAG por outro agente etiológico",1,0,1,0
+2026,38,"2026-SE38","Município do Rio de Janeiro","SRAG por outro vírus respiratório",46,0,13,46
+2026,38,"2026-SE38","Outros municípios do RJ","SRAG não especificada",7,1,3,0
 2026,38,"2026-SE38","Outros municípios do RJ","SRAG por outro vírus respiratório",4,0,0,4
-2026,39,"2026-SE39","Município do Rio de Janeiro","Não classificada",23,0,1,4
-2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG não especificada",34,3,9,0
+2026,39,"2026-SE39","Município do Rio de Janeiro","Não classificada",2,0,1,0
+2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG não especificada",53,3,10,0
 2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG por COVID-19",3,0,1,3
-2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG por influenza",8,0,5,8
-2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG por outro agente etiológico",2,0,1,0
-2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG por outro vírus respiratório",36,1,13,36
-2026,39,"2026-SE39","Outros municípios do RJ","Não classificada",1,0,0,0
-2026,39,"2026-SE39","Outros municípios do RJ","SRAG não especificada",4,0,1,0
+2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG por influenza",9,0,5,9
+2026,39,"2026-SE39","Município do Rio de Janeiro","SRAG por outro vírus respiratório",45,1,14,45
+2026,39,"2026-SE39","Outros municípios do RJ","SRAG não especificada",6,0,1,0
 2026,39,"2026-SE39","Outros municípios do RJ","SRAG por outro vírus respiratório",5,0,1,5
-2026,40,"2026-SE40","Município do Rio de Janeiro","Não classificada",37,0,7,4
-2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG não especificada",26,2,8,0
+2026,40,"2026-SE40","Município do Rio de Janeiro","Não classificada",4,0,1,1
+2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG não especificada",54,4,19,0
 2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG por COVID-19",2,0,0,2
-2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG por influenza",7,1,4,7
+2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG por influenza",15,1,7,13
 2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG por outro agente etiológico",3,1,1,0
-2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG por outro vírus respiratório",25,0,6,25
-2026,40,"2026-SE40","Outros municípios do RJ","Não classificada",5,0,1,0
-2026,40,"2026-SE40","Outros municípios do RJ","SRAG não especificada",6,1,2,0
-2026,40,"2026-SE40","Outros municípios do RJ","SRAG por outro vírus respiratório",3,0,1,3
-2026,41,"2026-SE41","Município do Rio de Janeiro","Não classificada",18,0,2,1
-2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG não especificada",7,0,1,0
-2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG por COVID-19",2,0,1,2
-2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG por outro vírus respiratório",7,0,0,7
-2026,41,"2026-SE41","Outros municípios do RJ","Não classificada",2,0,0,0
+2026,40,"2026-SE40","Município do Rio de Janeiro","SRAG por outro vírus respiratório",45,1,12,45
+2026,40,"2026-SE40","Outros municípios do RJ","Não classificada",2,0,1,0
+2026,40,"2026-SE40","Outros municípios do RJ","SRAG não especificada",9,1,3,0
+2026,40,"2026-SE40","Outros municípios do RJ","SRAG por outro vírus respiratório",4,0,1,4
+2026,41,"2026-SE41","Município do Rio de Janeiro","Não classificada",5,0,2,0
+2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG não especificada",64,6,17,0
+2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG por COVID-19",8,0,3,8
+2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG por influenza",10,1,6,10
+2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG por outro agente etiológico",1,0,0,0
+2026,41,"2026-SE41","Município do Rio de Janeiro","SRAG por outro vírus respiratório",42,0,9,42
+2026,41,"2026-SE41","Outras UFs","SRAG não especificada",1,0,0,0
+2026,41,"2026-SE41","Outros municípios do RJ","Não classificada",1,0,0,0
+2026,41,"2026-SE41","Outros municípios do RJ","SRAG não especificada",10,0,3,0
 2026,41,"2026-SE41","Outros municípios do RJ","SRAG por COVID-19",1,0,0,1
+2026,41,"2026-SE41","Outros municípios do RJ","SRAG por outro vírus respiratório",4,0,3,4
+2026,42,"2026-SE42","Município do Rio de Janeiro","Não classificada",24,0,4,3
+2026,42,"2026-SE42","Município do Rio de Janeiro","SRAG não especificada",22,1,4,0
+2026,42,"2026-SE42","Município do Rio de Janeiro","SRAG por COVID-19",4,0,0,4
+2026,42,"2026-SE42","Município do Rio de Janeiro","SRAG por influenza",5,0,4,5
+2026,42,"2026-SE42","Município do Rio de Janeiro","SRAG por outro agente etiológico",2,0,0,2
+2026,42,"2026-SE42","Município do Rio de Janeiro","SRAG por outro vírus respiratório",19,0,4,19
+2026,42,"2026-SE42","Outros municípios do RJ","Não classificada",4,0,0,0
+2026,42,"2026-SE42","Outros municípios do RJ","SRAG não especificada",2,0,0,0
+2026,42,"2026-SE42","Outros municípios do RJ","SRAG por COVID-19",1,0,0,1
+2026,42,"2026-SE42","Outros municípios do RJ","SRAG por outro vírus respiratório",3,0,0,3
+2026,43,"2026-SE43","Município do Rio de Janeiro","Não classificada",6,0,2,2
+2026,43,"2026-SE43","Município do Rio de Janeiro","SRAG não especificada",1,0,0,0
+2026,43,"2026-SE43","Município do Rio de Janeiro","SRAG por influenza",2,0,2,2
+2026,43,"2026-SE43","Município do Rio de Janeiro","SRAG por outro vírus respiratório",3,0,1,3
+2026,43,"2026-SE43","Outros municípios do RJ","Não classificada",1,0,0,0
+2026,43,"2026-SE43","Outros municípios do RJ","SRAG por COVID-19",3,0,0,3
